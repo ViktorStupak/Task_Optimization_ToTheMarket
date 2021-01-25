@@ -1,7 +1,6 @@
 ﻿using MarketApp.HelpClasses;
 using System;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
 
 namespace MarketApp
@@ -11,18 +10,16 @@ namespace MarketApp
         static void Main()
         {
             // here you can change the tested level 0 - 10:
-            var testFiles = Helpers.ReadFilesForLevel(2);
+            for (var i = 0; i <= 10; i++)
+                foreach (var testFile in Helpers.ReadFilesForLevel(i))
+                {
+                    var stopwatch = Stopwatch.StartNew();
 
-            foreach (var testFile in testFiles)
-            {
-                var stopwatch = Stopwatch.StartNew();
-                
-                // TODO of the task: Implement the calculation:
-                var calculator = new CalculationToImplement();
-                var result = calculator.Calculate(testFile.Input);
+                    var calculator = new CalculationToImplement();
+                    var result = calculator.Calculate(testFile.Input);
 
-                ReportResult(testFile, result, stopwatch);
-            }
+                    ReportResult(testFile, result, stopwatch);
+                }
 
             Console.WriteLine("PROGRAM FINISHED ...");
             Console.ReadLine();
@@ -48,6 +45,8 @@ namespace MarketApp
             Console.WriteLine($"Numbers:       {(isCorrect ? "PASSED" : "FAILED")}");
             Console.WriteLine($"   Calculated: {calculatedNumbers.CutIfLong(80)}");
             Console.WriteLine($"   Expected:   {expectedNumbers.CutIfLong(80)}");
+            Console.WriteLine($"   Calculated sum: {result.Numbers.Sum()}");
+            Console.WriteLine($"   Expected sum:   {testFile.OutputNumbers.Sum()}");
             Console.WriteLine();
         }
 
@@ -74,7 +73,7 @@ namespace MarketApp
                 return false;
             }
 
-            for (int i = 0; i < kindsCount - 1; i++)
+            for (var i = 0; i < kindsCount - 1; i++)
             {
                 var current = numbers[i];
                 var next = numbers[i + 1];

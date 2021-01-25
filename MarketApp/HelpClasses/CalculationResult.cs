@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MarketApp.HelpClasses
+﻿namespace MarketApp.HelpClasses
 {
     public class CalculationResult
     {
